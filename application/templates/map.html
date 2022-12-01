@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+
+<style> #bmap { height: 400px; width: 1000px}</style>
+
+<h3>Map</h3>
+
+<div id="bmap"></div>
+
+<script>
+    //make map and tiles
+    
+    const bmap = L.map('bmap').setView([53.63, -113.32],10);
+    const attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+    const tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tile = L.tileLayer(tileUrl, {attribution});
+    tile.addTo(bmap);
+
+    const jsonfile = JSON.parse({{data|tojson}});
+    console.log(jsonfile[1]['latitude'])
+    console.log(jsonfile[393])
+    console.log(jsonfile.length)
+
+
+
+    const layerGroup  = L.layerGroup().addTo(bmap);
+    
+
+     for (i = 0; i < jsonfile.length; i++) {
+          marker = L.marker([jsonfile[i]['latitude'], jsonfile[i]['longitude']]);
+          marker.addTo(layerGroup);
+     }
+
+     var overlay = {'markers': layerGroup};
+     L.control.layers(null, overlay).addTo(bmap);
+     
+
+
+
+//     var addMarkers = function(point) {
+//                 L.marker([point.latitude, point.longitude])
+//                 .addTo(markers)
+//                 .bindPopup(point.name);
+
+//             };
+//      jsonfile.forEach(addMarkers);
+     
+
+
+
+
+
+
+    
+
+
+
+
+
+  
+
+
+
+
+
+
+
+   
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+{% endblock %}
