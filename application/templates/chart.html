@@ -18,17 +18,17 @@
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [
-                {% for item in labels %}
-                       "{{ item }}",
-                {% endfor %}
+            labels: ["l","j","o"
+                // {% for item in labels %}
+                //        "{{ item }}",
+                // {% endfor %}
             ],
             datasets: [{
                 label: '# of Businesses',
-                data: [
-                    {% for item in values %}
-                    "{{ item }}",
-                    {% endfor %}
+                data: ["4","5","9"
+                    // {% for item in values %}
+                    // "{{ item }}",
+                    // {% endfor %}
                 ],
                 borderWidth: 1
             }]
