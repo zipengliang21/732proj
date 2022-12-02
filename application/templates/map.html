@@ -14,16 +14,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 
-<style> #bmap { height: 400px; width: 1000px}</style>
+<style> #bmap { height: 400px}</style>
 
-<h3>Map</h3>
+<h3  style="text-align: center">Map</h3>
+
+
+       
+
+
+<div class="dropdown" method = 'GET' style="padding-left: 80px">
+     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" 
+                           >
+       Apply stars' filter
+     </button>
+     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+       <li><a class="dropdown-item" href="{{ url_for('star_map',  s=1)}}">1</a></li>
+       <li><a class="dropdown-item" href="{{ url_for('star_map',  s=2)}}">2 </a></li>
+       <li><a class="dropdown-item" href="{{ url_for('star_map',  s=3)}}">3</a></li>
+       <li><a class="dropdown-item" href="{{ url_for('star_map',  s=4)}}">4</a></li>
+       <li><a class="dropdown-item" href="{{ url_for('star_map',  s=5)}}">5</a></li>
+     </ul>
+   </div>
+
+
+   <div  style="padding-bottom: 50px">
+  
+   </div>
+
+
+
+
 
 <div id="bmap"></div>
 
 <script>
     //make map and tiles
     
-    const bmap = L.map('bmap').setView([53.63, -113.32],10);
+    const bmap = L.map('bmap').setView([53.55, -113.49],12);
     const attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
     const tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tile = L.tileLayer(tileUrl, {attribution});
@@ -33,13 +60,12 @@
     const jsonfile = JSON.parse({{data|tojson}});
     const markers = L.markerClusterGroup();
 
-    
+
     //"Name: " + jsonfile[i]['name'] +"</br>" + " Stars: " +  jsonfile[i]['stars'] +  " Review count: " + jsonfile[i]['review_count'];
 
      for (i = 0; i < jsonfile.length; i++) {
-          var content = jsonfile[i]['name'];
-          marker = L.marker([jsonfile[i]['latitude'], jsonfile[i]['longitude']]).bindPopup(content);
-          var content =  jsonfile[i]['name'] ;
+          var content =  "Name: " + jsonfile[i]['name'] +"</br>" + " Stars: " +  jsonfile[i]['stars']  +"</br>" + " Review count: " + jsonfile[i]['review_count'];
+          marker = L.marker([jsonfile[i]['latitude'], jsonfile[i]['longitude']]).bindPopup(content);          
           marker.on('mouseover', function (e) {
                     this.openPopup();
                 });
