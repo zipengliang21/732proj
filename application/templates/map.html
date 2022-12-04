@@ -59,13 +59,29 @@
 
     const jsonfile = JSON.parse({{data|tojson}});
     const markers = L.markerClusterGroup();
+     
+     
+     
+
+    var color_by_category = {
+    "Restaurants":"darkblue", "Food":"cadetblue", "Nightlife":"black",
+    "Shopping":"darkpurple", "Beauty & Spas":"pink","Local Services":"darktblue",
+    "Fashion":"darkpurple", "Active Life":"darkred",
+    "Automotive":"orange","Health & Medical":"darkgreen", "Others":"gray"};
+
+    var customize_icon = {"Restaurants":"coffee", "Food":"glass", "Nightlife":"bookmark",
+    "Shopping":"star", "Beauty & Spas":"star","Local Services":"flag",
+    "Fashion":"star", "Active Life":"bookmark",
+    "Automotive":"car","Health & Medical":"flag", "Others":"tags"};
 
 
     //"Name: " + jsonfile[i]['name'] +"</br>" + " Stars: " +  jsonfile[i]['stars'] +  " Review count: " + jsonfile[i]['review_count'];
 
      for (i = 0; i < jsonfile.length; i++) {
+          var c =  jsonfile[i]["category"]
           var content =  "Name: " + jsonfile[i]['name'] +"</br>" + " Stars: " +  jsonfile[i]['stars']  +"</br>" + " Review count: " + jsonfile[i]['review_count'];
-          marker = L.marker([jsonfile[i]['latitude'], jsonfile[i]['longitude']]).bindPopup(content);          
+          var by_category = L.AwesomeMarkers.icon({icon: customize_icon[c], prefix: 'fa', markerColor: color_by_category[c]}); 
+          marker = L.marker([jsonfile[i]['latitude'], jsonfile[i]['longitude']],{icon: by_category}).bindPopup(content);          
           marker.on('mouseover', function (e) {
                     this.openPopup();
                 });
